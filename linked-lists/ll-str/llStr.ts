@@ -147,6 +147,20 @@ class LLStr {
    **/
 
   setAt(idx: number, val: string): void {
+
+    if (idx >= this.length || idx < 0) { // check if idx is valid
+      throw new IndexError("Index not found!");
+    }
+
+    let curr = this.head!;
+
+    for (let i = 0; i < this.length; i++) {
+      if (i === idx) {
+        curr.val = val;
+      }
+      curr = curr.next!;
+    }
+
   }
 
   /** insertAt(idx, val): add node w/val before idx.
@@ -155,6 +169,42 @@ class LLStr {
    **/
 
   insertAt(idx: number, val: string): void {
+
+    const newNode = new NodeStr(val);
+
+    if (this.length === 0 && idx === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+      this.length++;
+    }
+    else if (idx > this.length || idx < 0) { // check if idx is valid
+      throw new IndexError("Index not found!");
+    }
+    else if (this.length === 1) {
+      newNode.next = this.head; //head is updated outside if block
+      this.length++;
+    }
+    else {
+      let curr = this.head!;
+
+      for (let i = 0; i < this.length; i++) {
+        if (i === idx-1) {
+          newNode.next = curr.next;
+          curr.next = newNode;
+        }
+        curr = curr.next || newNode;
+      }
+      this.length++;
+    }
+
+    //if was inserted before head, need to update head
+    if (idx === 0) {
+      this.head = newNode;
+    }
+
+
+
+
   }
 
   /** removeAt(idx): return & remove item at idx,
