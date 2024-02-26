@@ -102,7 +102,19 @@ class LLStr {
    **/
 
   shift(): string {
-    return "x";
+    if (this.length === 0) {
+      throw new IndexError("Empty list!");
+    }
+
+    const removedNode = this.head;
+    this.head = this.head!.next;
+
+    if (this.length === 1) {
+      this.tail = null;
+    }
+
+    this.length--;
+    return removedNode!.val;
   }
 
   /** getAt(idx): get val at idx.
@@ -111,7 +123,22 @@ class LLStr {
    **/
 
   getAt(idx: number): string {
-    return "x";
+
+    if (idx >= this.length || idx < 0) { // check if idx is valid
+      throw new IndexError("Index not found!");
+    }
+
+    let curr = this.head!;
+
+    for (let i = 0; i < this.length; i++) {
+      if (i === idx) {
+        return curr.val;
+      }
+      curr = curr.next!;
+    }
+
+    throw new IndexError("Index not found!"); // please TS gods
+
   }
 
   /** setAt(idx, val): set val at idx to val.
