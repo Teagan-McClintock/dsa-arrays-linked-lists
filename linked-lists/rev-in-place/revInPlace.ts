@@ -34,6 +34,33 @@ function reverseInPlace(lst: LLStr): void {
    * c -> b -> a -> null
    *
    */
+
+  // FIXME: assumes there is at least 1 thing in here
+  // handle 1 value edge cases if needed?
+
+  const oldTail = lst.tail;
+
+  let curr = lst.head!;
+  let prev: Node;
+  let next: Node;
+
+  for (let i = 0; i < lst.length; i++) {
+
+    const tempNext = curr.next;
+    const prev = curr;
+
+    if (curr === lst.head) {
+      curr.next = null;
+      lst.tail = curr;
+    }
+
+
+
+    // curr =
+  }
+
+
+  return lst;
 }
 
 
