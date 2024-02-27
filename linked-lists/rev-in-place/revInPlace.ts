@@ -41,26 +41,31 @@ function reverseInPlace(lst: LLStr): void {
   const oldTail = lst.tail;
 
   let curr = lst.head!;
-  let prev: Node;
-  let next: Node;
+  let prev: LLNodeStr | null;
 
   for (let i = 0; i < lst.length; i++) {
 
     const tempNext = curr.next;
-    const prev = curr;
 
     if (curr === lst.head) {
       curr.next = null;
       lst.tail = curr;
     }
+    else {
+      curr.next = prev!;
+    }
 
+    prev = curr;
 
+    if (curr === oldTail) {
+      lst.head = curr;
+    }
+    else {
+      curr = tempNext!;
+    }
 
-    // curr =
   }
 
-
-  return lst;
 }
 
 
