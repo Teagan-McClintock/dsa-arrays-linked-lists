@@ -191,7 +191,12 @@ class LLStr {
         if (i === idx-1) {
           newNode.next = curr.next;
           curr.next = newNode;
+
+          if (i === this.length - 1) {
+            this.tail = newNode; // if inserting it @ last value, make it tail
+          }
         }
+
         curr = curr.next || newNode;
       }
       this.length++;
@@ -202,9 +207,6 @@ class LLStr {
       this.head = newNode;
     }
 
-
-
-
   }
 
   /** removeAt(idx): return & remove item at idx,
@@ -213,7 +215,60 @@ class LLStr {
    **/
 
   removeAt(idx: number): string {
-    return "x";
+
+      if (this.length === 0 || idx >= this.length || idx < 0) {
+        throw new IndexError("Index not found!");
+      }
+      else if (this.length === 1) {
+        const removeMe = this.head!.val;
+        this.head = null;
+        this.tail = null;
+        this.length--;
+        return removeMe;
+      }
+      else if (idx === 0) { // if it's the head we're removing
+        const removeMe = this.head!.val;
+        this.head = this.head!.next!;
+        this.length--;
+        return removeMe;
+      }
+      else if (idx === this.length - 1) { // if it's the tail we're removing
+
+        let curr = this.head!;
+
+        const removeMe = this.tail!.val;
+
+        for (let i = 0; i < this.length - 1; i++) {
+          if (i === idx - 1) { // replacing the tail
+            this.tail = curr;
+          }
+          curr = curr.next!;
+        }
+
+        this.length--;
+        return removeMe;
+      }
+      else { // if we're removing something in the middle (but this will get refactored soon)
+
+        let curr = this.head!;
+
+        for (let i = 0; i < this.length - 1; i++) {
+          if (i === idx - 1) { // the value before we want to remove
+
+            const beforeRemoveMe = curr;
+            const afterRemoveMe = curr.next!.next;
+            const removeMe = beforeRemoveMe.next!.val;
+
+            beforeRemoveMe.next = afterRemoveMe;
+            this.length--;
+            return removeMe;
+          }
+          curr = curr.next!;
+        }
+
+      }
+
+    throw new IndexError("Index not found!");
   }
 
   /** toArray (useful for tests!) */
