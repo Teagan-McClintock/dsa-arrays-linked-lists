@@ -42,6 +42,34 @@ class DLLNum {
   /** push(val): add new value to end of list. */
 
   push(val: number): void {
+
+    const newNode = new DLLNodeNum(val);
+
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      const oldTail: DLLNodeNum = this.tail!;
+      oldTail.next = newNode;
+
+      newNode.prev = oldTail;
+      this.tail = newNode;
+      // newNode.next = null;
+    }
+
+    this.length++;
+
+    /**
+     *
+     *  B -> C adding D
+     *
+     *  plug D as C's next
+     *
+     *  give D C as a previous
+     *  make D the tail
+     *  give D.next null
+     */
+
   }
 
   /** unshift(val): add new value to start of list. */
